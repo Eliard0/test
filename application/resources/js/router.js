@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import ProducerIndex from './components/producers/ProducerIndex.vue'
+import ProducerIndex from './components/producer/ProducerIndex.vue'
+import ProducerDetails from './components/producer/ProducerDetail.vue';
 
 const routes = [
     { path: '/', redirect: '/producers' },
@@ -10,6 +11,13 @@ const routes = [
         component: ProducerIndex, 
         name: 'producers.index' 
     },
+
+    {
+        path: '/producers/:id',
+        name: 'producers.details',
+        component: ProducerDetails,
+        props: true,
+      },
 
     { 
         path: '/:pathMatch(.*)*', 

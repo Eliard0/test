@@ -1,6 +1,7 @@
 import { ref, onMounted, Ref } from 'vue';
 import axios, { AxiosError } from 'axios';
-import { Confirm, Toast } from 'primevue/api'; 
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/usetoast'; 
 
 export interface IProducer {
     id?: number; 
@@ -18,6 +19,9 @@ export interface IAxiosErrorData {
     message: string;
     errors: Record<string, string[]>;
 }
+
+type Confirm = ReturnType<typeof useConfirm>;
+type Toast = ReturnType<typeof useToast>;
 
 export function useProducers(confirm: Confirm, toast: Toast) {
     const producers: Ref<IProducer[]> = ref([]);
@@ -67,7 +71,7 @@ export function useProducers(confirm: Confirm, toast: Toast) {
         }
     };
 
-    const confirmDeleteProducer = (producerData: IProducer) => {
+    const confirmDeleteProducer = (producerData: IProducer, onSuccess?: () => void) => {
         confirm.require({
             message: `Tem certeza que deseja deletar o produtor ${producerData.name}?`,
             header: 'Confirmação de Exclusão',
@@ -77,16 +81,18 @@ export function useProducers(confirm: Confirm, toast: Toast) {
                     await axios.delete(`/api/producers/${producerData.id}`);
                     await fetchProducers(); 
                     toast.add({severity:'warn', summary: 'Deletado', detail: 'Produtor excluído com sucesso.', life: 3000});
+    
+                    if (onSuccess) onSuccess();
                 } catch (error) {
                     const err = error as AxiosError;
                     const detail = (err.response?.data as IAxiosErrorData)?.message || 'Falha ao deletar produtor.';
-
                     toast.add({severity: 'error', summary: 'API Error', detail: detail, life: 3000});
                     console.error("Error deleting producer:", err);
                 }
             },
         });
     };
+    
 
     const openNew = () => {
         producer.value = { 
