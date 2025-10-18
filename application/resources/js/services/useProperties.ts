@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { IAxiosErrorData } from './useProducers'; 
+import saveAs  from 'file-saver';
 
 export interface IProperty {
     id?: number; 
@@ -123,6 +124,22 @@ export function useProperties(confirm: Confirm, toast: Toast) {
         propertyDialog.value = true;
     };
 
+    const exportExcel = async () => {
+        try {
+            const response = await axios.get('/api/properties/export-excel', {
+                responseType: 'blob',
+            });
+    
+            const fileName = `properties_${new Date().toISOString().slice(0,19).replace(/:/g, '-')}.xlsx`;
+            saveAs(response.data, fileName);
+    
+            toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Propriedades exportadas com sucesso.', life: 3000 });
+        } catch (error) {
+            console.error('Erro ao exportar propriedades:', error);
+            toast.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível exportar as propriedades.', life: 3000 });
+        }
+    };
+
     return {
         properties,
         propertyDialog,
@@ -133,5 +150,6 @@ export function useProperties(confirm: Confirm, toast: Toast) {
         confirmDeleteProperty,
         openNew,
         editProperty,
+        exportExcel,
     };
 }

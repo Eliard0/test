@@ -26,10 +26,14 @@
         </div>
 
         <div class="bg-white shadow-lg rounded-xl p-6 max-w-4xl mx-auto my-10">
+            <div class="flex justify-start mb-4">
+                <v-Button label="Exportar Propriedades (.xlsx)" icon="pi pi-file-excel"
+                    class="p-button-success p-button-sm" @click="exportExcel" />
+            </div>
             <div class="flex justify-between items-center border-b pb-2 mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Propriedades Rurais</h3>
 
-                <v-Button label="Adicionar Propriedade" icon="pi pi-plus" class="p-button-sm p-button-success"
+                <v-Button label="Nova Propriedade" icon="pi pi-plus" class="p-button-sm p-button-success"
                     @click="openNewPropertyModal" :disabled="!currentProducer || loadingProducer" />
             </div>
 
@@ -48,7 +52,6 @@
         <div class="bg-white shadow-lg rounded-xl p-6 max-w-4xl mx-auto my-10">
             <div class="flex justify-between items-center border-b pb-2 mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Unidades de Produção</h3>
-
                 <v-Button label="Nova Unidade" icon="pi pi-plus" class="p-button-sm p-button-success"
                     @click="openNewUnitModal" />
             </div>
@@ -58,10 +61,13 @@
                 @delete-unit="confirmDeleteUnit" />
         </div>
 
-        <v-production-form :producerId="currentProducer?.id || 0"  v-model:display="unitDialogOpen" @saved="handleSavedUnit" :unitData="productionUnit"
-            :properties="propertyList" />
+        <v-production-form :producerId="currentProducer?.id || 0" v-model:display="unitDialogOpen"
+            @saved="handleSavedUnit" :unitData="productionUnit" :properties="propertyList" />
 
         <div class="bg-white shadow-lg rounded-xl p-6 max-w-4xl mx-auto my-10">
+            <v-Button label="Exportar PDF" icon="pi pi-file-pdf" class="p-button-sm p-button-warning"
+            @click="exportHerdsPdf(producerId)"
+            />
             <div class="flex justify-between items-center border-b pb-2 mb-4">
                 <h3 class="text-xl font-semibold text-gray-800">Rebanho</h3>
 
@@ -73,14 +79,8 @@
                 @delete-herd="confirmDeleteHerd" />
 
 
-            <v-herd-form  
-                :loading="false" 
-                v-model:display="herdDialogOpen" 
-                :propertyId="selectedPropertyId"
-                :herdData="herd" 
-                :properties="propertyList"
-                @saved="handleSavedHerdModal" 
-            />
+            <v-herd-form :loading="false" v-model:display="herdDialogOpen" :propertyId="selectedPropertyId"
+                :herdData="herd" :properties="propertyList" @saved="handleSavedHerdModal" />
 
         </div>
 
@@ -154,7 +154,8 @@ const {
     openNew: openNewProperty,
     editProperty: editPropertyAction,
     confirmDeleteProperty: confirmDeletePropertyAction,
-    fetchProperties
+    fetchProperties,
+    exportExcel
 } = useProperties(confirm as any, toast as any);
 
 const propertyDialogOpen = ref(false);
@@ -267,6 +268,7 @@ const {
     openNew: openNewHerd,
     editHerd: editHerdAction,
     handleSavedHerd,
+    exportHerdsPdf,
     confirmDeleteHerd: confirmDeleteHerdAction
 } = useHerds(confirm as any, toast as any);
 
@@ -278,7 +280,7 @@ const refreshAllHerds = async () => {
     const propertyIds = propertyList.value
         .map(p => p.id)
         .filter((id): id is number => id !== undefined && id !== null);
-    
+
     await fetchHerds(propertyIds);
 };
 
@@ -292,7 +294,7 @@ const openNewHerdModal = () => {
     if (!firstProperty.id) return; // evita undefined
 
     selectedPropertyId.value = firstProperty.id;  // ✅ define o propertyId usado no modal
-    openNewHerd(firstProperty.id); 
+    openNewHerd(firstProperty.id);
 
     herdDialogOpen.value = true;
 };

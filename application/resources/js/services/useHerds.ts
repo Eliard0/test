@@ -2,6 +2,7 @@ import { ref, Ref, shallowRef } from 'vue';
 import axios, { AxiosError } from 'axios';
 import { useToast } from 'primevue/usetoast';
 import { useConfirm } from 'primevue/useconfirm';
+import saveAs  from 'file-saver';
 
 // Interface de Dados do Rebanho
 export interface IHerd {
@@ -34,7 +35,7 @@ export function useHerds(confirm: Confirm, toast: Toast) {
             return response.data;
         } catch (error) {
             // ... (tratamento de erro, retorna array vazio)
-            return []; 
+            return [];
         }
     };
 
@@ -42,14 +43,14 @@ export function useHerds(confirm: Confirm, toast: Toast) {
     const fetchHerds = async (propertyIds: number[]) => {
         loading.value = true;
         herds.value = [];
-        
+
         try {
             // Busca todas as unidades de todas as propriedades em paralelo
             const fetchPromises = propertyIds.map(id => fetchHerdsByPropertyId(id));
             const results = await Promise.all(fetchPromises);
-            
+
             // Concatena todos os resultados em herds.value
-            herds.value = results.flat(); 
+            herds.value = results.flat();
         } catch (e) {
             // ...
         } finally {
@@ -71,7 +72,7 @@ export function useHerds(confirm: Confirm, toast: Toast) {
     // Preenche o estado com dados para edição
     const editHerd = (herdData: IHerd) => {
         // Clona os dados recebidos para não modificar o estado da lista diretamente
-        herd.value = { ...herdData }; 
+        herd.value = { ...herdData };
     };
 
     // Salva (Criação ou Atualização)
@@ -90,7 +91,7 @@ export function useHerds(confirm: Confirm, toast: Toast) {
             }
 
             toast.add({ severity: 'success', summary: 'Sucesso', detail: successMessage, life: 3000 });
-            
+
         } catch (error) {
             const err = error as AxiosError;
             const detail = (err.response?.data as IAxiosErrorData)?.message || 'Erro ao salvar o rebanho.';
@@ -98,10 +99,10 @@ export function useHerds(confirm: Confirm, toast: Toast) {
             toast.add({ severity: 'error', summary: 'Erro ao Salvar', detail: detail, life: 5000 });
             console.error("Error saving herd data:", err);
             // Re-throw para manter o modal aberto no componente pai, se necessário
-            throw error; 
+            throw error;
         }
     };
-    
+
     // Confirmação e exclusão
     const confirmDeleteHerd = (herdData: IHerd, onSuccess: () => void) => {
         confirm.require({
@@ -124,6 +125,28 @@ export function useHerds(confirm: Confirm, toast: Toast) {
         });
     };
 
+    const exportHerdsPdf = async (producerId: number) => {
+        if (!producerId) {
+            toast.add({ severity: 'warn', summary: 'Aviso', detail: 'Selecione um produtor antes de exportar.', life: 3000 });
+            return;
+        }
+
+        try {
+            const response = await axios.get(`/api/herds/export-pdf/${producerId}`, {
+                responseType: 'blob',
+            });
+
+            const fileName = `herds_producer_${producerId}_${new Date().toISOString().replace(/[:.]/g, '')}.pdf`;
+            saveAs(response.data, fileName);
+            toast.add({ severity: 'success', summary: 'Exportado', detail: 'PDF de rebanhos gerado com sucesso!', life: 3000 });
+
+        } catch (error) {
+            const err = error as AxiosError;
+            toast.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao exportar PDF.', life: 3000 });
+            console.error(err);
+        }
+    };
+
 
     return {
         herds,
@@ -134,5 +157,6 @@ export function useHerds(confirm: Confirm, toast: Toast) {
         editHerd,
         handleSavedHerd,
         confirmDeleteHerd,
+        exportHerdsPdf,
     };
 }
