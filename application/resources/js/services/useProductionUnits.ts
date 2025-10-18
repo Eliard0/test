@@ -19,7 +19,6 @@ interface IAxiosErrorData {
     errors?: Record<string, string[]>;
 }
 
-
 export function useProductionUnits(confirm: Confirm, toast: Toast) {
     const productionUnits: Ref<IProductionUnit[]> = ref([]);
     const productionUnit: Ref<IProductionUnit | null> = ref(null);
@@ -29,12 +28,12 @@ export function useProductionUnits(confirm: Confirm, toast: Toast) {
         loading.value = true;
         try {
             const response = await axios.get<IProductionUnit[]>(`/api/production-units?property_id=${propertyId}`);
-            productionUnits.value = response.data;
-
+            return response.data; // apenas retorna
         } catch (error) {
             const err = error as AxiosError;
             const detail = (err.response?.data as IAxiosErrorData)?.message || 'Falha ao buscar unidades de produção.';
             toast.add({ severity: 'error', summary: 'API Error', detail: detail, life: 3000 });
+            return [];
         } finally {
             loading.value = false;
         }
@@ -50,7 +49,7 @@ export function useProductionUnits(confirm: Confirm, toast: Toast) {
     };
 
     const editProductionUnit = (unitData: IProductionUnit) => {
-        productionUnit.value = { ...unitData }; 
+        productionUnit.value = { ...unitData };
     };
 
     const handleSavedProduction = async (savedData: IProductionUnit) => {
@@ -78,7 +77,7 @@ export function useProductionUnits(confirm: Confirm, toast: Toast) {
             throw error;
         }
     };
-    
+
     const confirmDeleteProductionUnit = (unitData: IProductionUnit, onSuccess: () => void) => {
         confirm.require({
             message: `Tem certeza que deseja deletar a unidade '${unitData.culture_name}'?`,

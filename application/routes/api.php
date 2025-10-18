@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HerdController;
 use App\Http\Controllers\ProducerController;
 use App\Http\Controllers\ProductionUnitController;
 use App\Http\Controllers\PropertyController;
@@ -13,3 +14,5 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('producers', ProducerController::class);
 Route::apiResource('properties', PropertyController::class);
 Route::apiResource('production-units', ProductionUnitController::class);
+
+Route::apiResource('herd', HerdController::class);
