@@ -11,6 +11,7 @@
                     optionValue="id"
                     optionLabel="name"
                     placeholder="Selecione uma propriedade" 
+                    required
                 />
             </div>
 
@@ -35,7 +36,7 @@
 
             <div class="field flex items-center gap-4 mb-4">
                 <label for="geographic_coordinates">Coordenadas Geográficas (Opcional):</label>
-                <v-InputText id="geographic_coordinates" v-model="unitDataClone.geographic_coordinates" />
+                <v-InputText id="geographic_coordinates" required v-model="unitDataClone.geographic_coordinates" />
             </div>
 
         </div>

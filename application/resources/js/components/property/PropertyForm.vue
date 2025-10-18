@@ -22,7 +22,7 @@
 
             <div class="field flex items-center gap-4 mb-4">
                 <label for="state_registration" class="font-semibold text-gray-700 w-1/4 text-right">Inscrição Est.:</label>
-                <v-InputText id="state_registration" v-model="propertyModel.state_registration" class="flex-grow w-full" />
+                <v-InputText id="state_registration" v-model="propertyModel.state_registration" required class="flex-grow w-full" />
             </div>
 
             <div class="grid grid-cols-2 gap-4">

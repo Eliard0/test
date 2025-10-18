@@ -23,12 +23,12 @@
             <div class="field flex items-center gap-4 mb-4">
                 <label for="phone" class="font-semibold text-gray-700 w-1/4 text-right">Telefone:</label>
                 <v-InputMask id="phone" v-model="producerModel.phone" mask="(99) 99999-9999"
-                    placeholder="(00) 00000-0000" class="flex-grow w-full" type="tel"/>
+                    placeholder="(00) 00000-0000" class="flex-grow w-full" type="tel" required/>
             </div>
 
             <div class="field flex gap-4 mb-4 items-start">
                 <label for="address" class="font-semibold text-gray-700 w-1/4 pt-2 text-right">Endereço:</label>
-                <v-Textarea id="address" v-model="producerModel.address" rows="3" class="flex-grow w-full" />
+                <v-Textarea id="address" v-model="producerModel.address" rows="3" class="flex-grow w-full" required />
             </div>
 
         </div>

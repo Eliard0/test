@@ -4,7 +4,7 @@
         <div v-if="!currentProducerId">
             <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b pb-2">Gestão de Produtores Rurais</h2>
 
-            <div class="flex justify-end mb-4">
+            <div class="flex justify-between mb-4">
                 <v-Button label="Relatórios" icon="pi pi-chart-bar" class="p-button-help p-button-lg p-3"
                     @click="goToReports" />
                 <v-Button label="Novo Produtor" icon="pi pi-plus" class="p-button-success p-button-lg p-3"

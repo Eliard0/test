@@ -27,20 +27,16 @@ class ReportController extends Controller
             ->groupBy('species');
 
         if ($producerId) {
-            $herdsQuery->whereHas('property', function ($q) use ($producerId) {
-                $q->where('producer_id', $producerId);
-            });
+            $herdsQuery->whereHas('property', fn($q) => $q->where('producer_id', $producerId));
         }
 
         $animalsBySpecies = $herdsQuery->get();
 
-        $productionUnitsQuery = ProductionUnit::select('crop', DB::raw('SUM(area) as total_hectares'))
-            ->groupBy('crop');
+        $productionUnitsQuery = ProductionUnit::select('culture_name', DB::raw('SUM(total_area_ha) as total_hectares'))
+            ->groupBy('culture_name');
 
         if ($producerId) {
-            $productionUnitsQuery->whereHas('property', function ($q) use ($producerId) {
-                $q->where('producer_id', $producerId);
-            });
+            $productionUnitsQuery->whereHas('property', fn($q) => $q->where('producer_id', $producerId));
         }
 
         $hectaresByCrop = $productionUnitsQuery->get();
