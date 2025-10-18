@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
@@ -131,7 +131,6 @@ const handleSavedDetails = async (updatedData: IProducer) => {
     await handleSaved(updatedData);
     producerDialogOpen.value = false;
     await fetchProducers();
-    // await fetchProperties(producerId);
 };
 
 const deleteProducer = () => {
@@ -239,7 +238,6 @@ const handleSavedUnit = async (savedData: IProductionUnit) => {
         await handleSavedProduction(savedData);
         unitDialogOpen.value = false;
 
-        // Atualiza todas as propriedades do produtor
         const allUnits: (IProductionUnit & { propertyName: string })[] = [];
         for (const prop of propertyList.value) {
             if (prop.id !== undefined) {
@@ -275,7 +273,6 @@ const {
 const herdDialogOpen = ref(false);
 const selectedPropertyId = ref<number | null>(null);
 
-// 🚨 NOVA FUNÇÃO AUXILIAR DE REFRESH PARA HERD
 const refreshAllHerds = async () => {
     const propertyIds = propertyList.value
         .map(p => p.id)
@@ -291,9 +288,9 @@ const openNewHerdModal = () => {
     }
 
     const firstProperty = propertyList.value[0];
-    if (!firstProperty.id) return; // evita undefined
+    if (!firstProperty.id) return;
 
-    selectedPropertyId.value = firstProperty.id;  // ✅ define o propertyId usado no modal
+    selectedPropertyId.value = firstProperty.id;
     openNewHerd(firstProperty.id);
 
     herdDialogOpen.value = true;
@@ -306,14 +303,12 @@ const editHerd = (herdData: IHerd) => {
 
 const confirmDeleteHerd = (herdData: IHerd) => {
     confirmDeleteHerdAction(herdData, async () => {
-        // 🚨 REFRESH COMPLETO APÓS EXCLUSÃO
         await refreshAllHerds();
     });
 };
 
 const handleSavedHerdModal = async (savedData: IHerd) => {
     herdDialogOpen.value = false;
-    // 🚨 REFRESH COMPLETO APÓS SALVAMENTO
     await refreshAllHerds();
 };
 
@@ -341,11 +336,9 @@ onMounted(async () => {
 });
 
 watch(activePropertyId, async (newId) => {
-    // A busca só ocorre se houver um ID válido
     if (newId) {
         await fetchProductionUnits(newId);
     } else {
-        // Limpa a lista se nenhuma propriedade estiver selecionada
         productionUnits.value = [];
     }
 });

@@ -21,15 +21,14 @@ class ProductionUnitController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validação dos dados
+
         $validatedData = $request->validate([
             'culture_name' => 'required|string|max:255',
             'total_area_ha' => 'required|numeric|min:0',
             'geographic_coordinates' => 'nullable|string|max:255',
-            'property_id' => 'required|integer|exists:properties,id', // MUITO IMPORTANTE!
+            'property_id' => 'required|integer|exists:properties,id',
         ]);
     
-        // 2. Criação (usando os dados validados)
         $productionUnit = ProductionUnit::create($validatedData);
         
         return response()->json($productionUnit, 201);

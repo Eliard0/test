@@ -28,7 +28,7 @@ export function useProductionUnits(confirm: Confirm, toast: Toast) {
         loading.value = true;
         try {
             const response = await axios.get<IProductionUnit[]>(`/api/production-units?property_id=${propertyId}`);
-            return response.data; // apenas retorna
+            return response.data;
         } catch (error) {
             const err = error as AxiosError;
             const detail = (err.response?.data as IAxiosErrorData)?.message || 'Falha ao buscar unidades de produção.';
@@ -57,11 +57,9 @@ export function useProductionUnits(confirm: Confirm, toast: Toast) {
 
         try {
             if (savedData.id) {
-                // UPDATE
                 await axios.put(`/api/production-units/${savedData.id}`, savedData);
                 successMessage = `Unidade ${savedData.culture_name} atualizada com sucesso!`;
             } else {
-                // CREATE
                 await axios.post('/api/production-units', savedData);
                 successMessage = `Unidade ${savedData.culture_name} criada com sucesso!`;
             }

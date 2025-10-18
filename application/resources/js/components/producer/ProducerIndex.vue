@@ -5,6 +5,8 @@
             <h2 class="text-3xl font-semibold mb-6 text-gray-800 border-b pb-2">Gestão de Produtores Rurais</h2>
 
             <div class="flex justify-end mb-4">
+                <v-Button label="Relatórios" icon="pi pi-chart-bar" class="p-button-help p-button-lg p-3"
+                    @click="goToReports" />
                 <v-Button label="Novo Produtor" icon="pi pi-plus" class="p-button-success p-button-lg p-3"
                     @click="openNew" />
             </div>
@@ -36,7 +38,7 @@
         <ProducerForm v-model:display="producerDialog" :producerData="producer" @saved="handleSaved" />
         <v-ConfirmDialog></v-ConfirmDialog>
         <v-Toast />
-        
+
     </div>
 </template>
 
@@ -62,8 +64,12 @@ const {
 
 const currentProducerId = ref<number | null>(null);
 
+const goToReports = () => {
+  router.push({ name: 'reports' });
+};
+
 const goToDetails = (id: number) => {
-  router.push({ name: 'producers.details', params: { id } });
+    router.push({ name: 'producers.details', params: { id } });
 };
 
 </script>

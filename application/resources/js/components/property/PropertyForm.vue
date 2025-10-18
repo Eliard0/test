@@ -95,19 +95,16 @@ const closeDialog = () => {
 };
 
 const saveForm = () => {
-    // Validação básica de campos obrigatórios
     if (!propertyModel.value.name || !propertyModel.value.municipality || !propertyModel.value.uf || !propertyModel.value.area_total) {
         alert('Por favor, preencha todos os campos obrigatórios (Nome, Área, Município e UF).');
         return;
     }
     
-    // Confirma que o producer_id está setado antes de enviar para o backend
     if (!propertyModel.value.producer_id) {
         alert('Erro: Produtor não vinculado. Recarregue a página.');
         return;
     }
 
-    // Envia os dados (para o handleSavedProperty do ProducerDetails)
     emit('saved', propertyModel.value);
 };
 </script>
