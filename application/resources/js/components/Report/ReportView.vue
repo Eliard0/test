@@ -6,10 +6,15 @@
         <h1 class="text-2xl font-bold mb-4">Relatórios</h1>
 
         <div class="flex items-center gap-4 mb-6">
-            <select v-model="selectedProducer" class="border p-2 rounded">
-                <option value="">Todos os produtores</option>
-                <option v-for="p in producers" :key="p.id" :value="p.id">{{ p.name }}</option>
-            </select>
+            <v-Select
+                id="producerFilter"
+                v-model="selectedProducer" 
+                :options="producers" 
+                optionValue="id"
+                optionLabel="name"
+                placeholder="Selecione um produtor" 
+                showClear
+            />
             <button @click="loadReports" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                 Pesquisar
             </button>
