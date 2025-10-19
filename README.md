@@ -61,7 +61,7 @@ dentro dessa pasta rode o comando para carregar todos os arquivos do laravel:
 
 composer install 
 
-## 🗄️ 6. Gerando nossa api key
+## 🗄️ 6. Gerando api key
 
 Ainda dentro do container agro-app rode o comando:
 
@@ -88,7 +88,7 @@ DB_DATABASE=test
 DB_USERNAME=postgres   
 DB_PASSWORD=postgres
 
-## 🗄️ 8. Rodar Migrations e Seeders
+## 🗄️ 8. Rodar Migrations
 
 se voce estiver na raiz do projeto entre dentro do container agro-app com o comando:
 
