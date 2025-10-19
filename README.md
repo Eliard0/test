@@ -55,13 +55,48 @@ docker exec -it agro-app bash
 
 logo apos entre dentro da pasta application com o comando:
 
-cd application
+cd application 
 
-## 🗄️ 5. Rodar Migrations e Seeders
+dentro dessa pasta rode o comando para carregar todos os arquivos do laravel:
+
+composer install 
+
+## 🗄️ 5. Gerando nossa api key
+
+Ainda dentro do container agro-app rode o comando:
+
+Crie uma cópia do arquivo .env.example e renomeie-a para .env e use o comando:
+
+php artisan key:generate
+
+apos a APP_KEY gerada dentro arquivo .env
+
+copie e cole ela dentro do arquivo docker-compose.yml, na parte de environment do container app
+
+depois volta para a raiz do projeto e recontrua os containers novamente com o comando:
+
+docker-compose up --build -d
+
+## 🗄️ 5. Configurando banco de dados
+
+configure o arquivo .env para usa o banco de dados postgress
+
+DB_CONNECTION=pgsql
+DB_HOST=db             
+DB_PORT=5432
+DB_DATABASE=test   
+DB_USERNAME=postgres   
+DB_PASSWORD=postgres
+
+## 🗄️ 6. Rodar Migrations e Seeders
+
+se voce estiver na raiz do projeto entre dentro do container agro-app com o comando:
+
+docker exec -it agro-app bash e execulte o comando para roda as migrations
 
 php artisan migrate
 
-## 🌐 6. Acesso aos Serviços
+## 🌐 7. Acesso aos Serviços
 
 | Serviço | Descrição | URL |
 |----------|------------|------|
