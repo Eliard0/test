@@ -35,11 +35,19 @@ Certifique-se de ter instalado:
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Git](https://git-scm.com/downloads)
 
-## 🐳 2. Subir os Containers
+## 📦 2. Clone o repositorio para sua maquina
+
+Ultilize o comando para clonar o repositorio:
+
+git clone https://github.com/Eliard0/test.git
+
+## 📦 3. Abra o arquivo do projeto em seu editor de codigo e abra o terminal integrado
+
+## 🐳 4. Subir os Containers
 
 docker-compose up --build -d
 
-## 📦 3. Configuração do Laravel
+## 📦 4. Configuração do Laravel
 
 Abra o terminal e acesse o container app com esse comando:
 
