@@ -47,7 +47,7 @@ git clone https://github.com/Eliard0/test.git
 
 docker-compose up --build -d
 
-## 📦 4. Configuração do Laravel
+## 📦 5. Configuração do Laravel
 
 Abra o terminal e acesse o container app com esse comando:
 
@@ -61,7 +61,7 @@ dentro dessa pasta rode o comando para carregar todos os arquivos do laravel:
 
 composer install 
 
-## 🗄️ 5. Gerando nossa api key
+## 🗄️ 6. Gerando nossa api key
 
 Ainda dentro do container agro-app rode o comando:
 
@@ -77,7 +77,7 @@ depois volta para a raiz do projeto e recontrua os containers novamente com o co
 
 docker-compose up --build -d
 
-## 🗄️ 5. Configurando banco de dados
+## 🗄️ 7. Configurando banco de dados
 
 configure o arquivo .env para usa o banco de dados postgress
 
@@ -88,7 +88,7 @@ DB_DATABASE=test
 DB_USERNAME=postgres   
 DB_PASSWORD=postgres
 
-## 🗄️ 6. Rodar Migrations e Seeders
+## 🗄️ 8. Rodar Migrations e Seeders
 
 se voce estiver na raiz do projeto entre dentro do container agro-app com o comando:
 
@@ -96,7 +96,7 @@ docker exec -it agro-app bash e execulte o comando para roda as migrations
 
 php artisan migrate
 
-## 🌐 7. Acesso aos Serviços
+## 🌐 9. Acesso aos Serviços
 
 | Serviço | Descrição | URL |
 |----------|------------|------|
