@@ -57,8 +57,7 @@ php artisan migrate
 
 | Serviço | Descrição | URL |
 |----------|------------|------|
-| **Frontend (Vue 3)** | Interface do sistema | [http://localhost:5173](http://localhost:5173) |
-| **Backend (Laravel)** | API RESTful | [http://localhost:8000](http://localhost:8000) |
+| **Aplicação | Laravel + Vue | [http://localhost:8000](http://localhost:8000) |
 | **PgAdmin** | Interface do banco | [http://localhost:5050](http://localhost:5050) |
 
 **Credenciais PgAdmin:**
@@ -73,10 +72,4 @@ Host: db
 User: postgres
 Password: postgres
 Database: postgres
-```
-## 🧭 9. Frontend — Vue 3
 
-O frontend é executado via container `node`, que já roda o Vite automaticamente.
-
-Acesse:  
-👉 [http://localhost:5173](http://localhost:5173)
