@@ -25,6 +25,8 @@ O sistema oferece CRUDs, exportações em **Excel/PDF** e **relatórios analíti
   - `db` → PostgreSQL
   - `pgadmin` → Interface do banco
 
+---
+
 ## ⚙️ 1. Pré-requisitos
 
 Certifique-se de ter instalado:
@@ -37,11 +39,15 @@ Certifique-se de ter instalado:
 
 docker-compose up --build -d
 
-## 📦 4. Configuração do Laravel
+## 📦 3. Configuração do Laravel
 
-Acesse o container `app`:
+Abra o terminal e acesse o container app com esse comando:
 
 docker exec -it agro-app bash
+
+logo apos entre dentro da pasta application com o comando:
+
+cd application
 
 ## 🗄️ 5. Rodar Migrations e Seeders
 
