@@ -100,7 +100,7 @@ php artisan migrate
 
 | Serviço | Descrição | URL |
 |----------|------------|------|
-| **Aplicação | Laravel + Vue | [http://localhost:8000](http://localhost:8000) |
+| **Aplicação** | Laravel + Vue | [http://localhost:8000](http://localhost:8000) |
 | **PgAdmin** | Interface do banco | [http://localhost:5050](http://localhost:5050) |
 
 **Credenciais PgAdmin:**
