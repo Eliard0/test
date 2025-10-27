@@ -4,4 +4,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{any}', function () {
     return view('master'); 
-})->where('any', '.*');
+})->where('any', '^(?!api/).*');

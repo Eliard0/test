@@ -6,12 +6,39 @@ use Illuminate\Http\Request;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 
+
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="API Agropecuária",
+ *      description="Documentação dos endpoints da API Agropecuária",
+ * 
+ * )
+ *
+ * @OA\Server(
+ *      url=L5_SWAGGER_CONST_HOST,
+ *      description="Servidor Local"
+ * )
+ */
 class PropertyController extends Controller
 {
     /**
-     * 
-     *
-     * @return JsonResponse
+     * @OA\Get(
+     *     path="/api/properties",
+     *     summary="Listar todas as propriedades",
+     *     tags={"Propriedades"},
+     *     @OA\Parameter(
+     *         name="producer_id",
+     *         in="query",
+     *         description="Filtra propriedades por produtor",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de propriedades retornada com sucesso"
+     *     )
+     * )
      */
     public function index(Request $request): JsonResponse
     {
@@ -20,7 +47,7 @@ class PropertyController extends Controller
         if ($request->filled('producer_id')) {
             $query->where('producer_id', $request->input('producer_id'));
         }
-        
+
         $properties = $query->get();
         return response()->json($properties);
     }
@@ -37,7 +64,7 @@ class PropertyController extends Controller
             'name' => 'required|string|max:255',
             'municipality' => 'required|string|max:100',
             'uf' => 'required|string|max:2',
-            'state_registration' => 'nullable|string|max:50|unique:properties', 
+            'state_registration' => 'nullable|string|max:50|unique:properties',
             'area_total' => 'required|numeric|min:0',
             'producer_id' => 'required|exists:producers,id',
         ]);
@@ -54,7 +81,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property): JsonResponse
     {
-        $property->load(['herds', 'productionUnits']); 
+        $property->load(['herds', 'productionUnits']);
         return response()->json($property);
     }
 
