@@ -52,12 +52,6 @@ class PropertyController extends Controller
         return response()->json($properties);
     }
 
-    /**
-     * 
-     *
-     * @param  Request
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
@@ -73,25 +67,12 @@ class PropertyController extends Controller
         return response()->json($property, 201);
     }
 
-    /**
-     * 
-     *
-     * @param  Property 
-     * @return JsonResponse
-     */
     public function show(Property $property): JsonResponse
     {
         $property->load(['herds', 'productionUnits']);
         return response()->json($property);
     }
 
-    /**
-     * 
-     *
-     * @param  Request
-     * @param  Property 
-     * @return JsonResponse
-     */
     public function update(Request $request, Property $property): JsonResponse
     {
         $validatedData = $request->validate([
@@ -107,12 +88,6 @@ class PropertyController extends Controller
         return response()->json($property);
     }
 
-    /**
-     * 
-     *
-     * @param  Property
-     * @return JsonResponse
-     */
     public function destroy(Property $property): JsonResponse
     {
         $property->delete();

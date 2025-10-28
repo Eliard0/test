@@ -42,12 +42,6 @@ class ProducerController extends Controller
         return response()->json($producers);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request $request
-     * @return JsonResponse
-     */
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([
@@ -63,24 +57,11 @@ class ProducerController extends Controller
         return response()->json($producer, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  Producer $producer
-     * @return JsonResponse
-     */
     public function show(Producer $producer): JsonResponse
     {
         return response()->json($producer);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request 
-     * @param  Producer 
-     * @return JsonResponse
-     */
     public function update(Request $request, Producer $producer): JsonResponse
     {
         $validatedData = $request->validate([
@@ -96,12 +77,6 @@ class ProducerController extends Controller
         return response()->json($producer);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  Producer $producer
-     * @return JsonResponse
-     */
     public function destroy(Producer $producer): JsonResponse
     {
         $producer->delete();
